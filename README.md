@@ -65,7 +65,7 @@ project/
 
 ### **Results**
 After training, the model achieved the following performance on the **Caltech101** dataset:
-![Accuracy Image](Accuracy.png)
+![Accuracy Image](result/Accuracy.png)
 - **Training Accuracy**: 98.1%
 - **Testing Accuracy**: 79.4%
 - **Validation Accuracy**: 77.0%
