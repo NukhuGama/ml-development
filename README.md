@@ -7,18 +7,18 @@ This project involves the classification of images from the **Caltech101** datas
 The model was trained on the **Caltech101** dataset, which consists of 102 categories of images. The system achieved excellent performance during training and evaluation:
 
 - **Training Results**:
-  - **Loss**: 0.06780
-  - **Accuracy**: 98.1%
+  - **Loss**: 0.05283
+  - **Accuracy**: 99.1%
 
 - **Testing Results**:
-  - **Loss**: 0.91814
-  - **Accuracy**: 79.4%
+  - **Loss**: 0.60652
+  - **Accuracy**: 86.5%
 
 - **Validation Results**:
-  - **Loss**: 0.96827
-  - **Accuracy**: 77.0%
+  - **Loss**: 0.6075
+  - **Accuracy**: 87.3%
 
-The model uses a Convolutional Neural Network (CNN) architecture built using Keras layers, and the dataset is preprocessed using image resizing and normalization.
+The model uses InceptionResNetV2 (a CNN) for transfer learning. It removes the top layers, applies Global Average Pooling, and adds a Dense layer with softmax for 102-class classification. 🚀
 
 ### **Model Saving Formats**
 
@@ -53,22 +53,17 @@ project/
 │   ├── saved_model.pb            # TensorFlow SavedModel protobuf
 │   └── variables                 # Saved model variables
 │
-├── h5_saved_model/
-│   ├── my_model.h5               # Keras model in .h5 format
-│   └── my_model.keras            # Keras model in .keras format
-│
-├── Saved _TfLite_and_TensorflowJS_Model.ipynb # Jupyter notebook for converting to TF Lite and TFJS
-├── notebook.ipynb                # Jupyter notebook with the model implementation
+├── notebook.ipynb                # Jupyter notebook with the model implementation using Using inception-resnet-v2 Model 
 ├── README.md                     # Project description
 └── requirements.txt              # Dependencies file
 ```
 
 ### **Results**
 After training, the model achieved the following performance on the **Caltech101** dataset:
-![Accuracy Image](result/Accuracy.png)
-- **Training Accuracy**: 98.1%
-- **Testing Accuracy**: 79.4%
-- **Validation Accuracy**: 77.0%
+
+- **Training Accuracy**: 99.1%
+- **Testing Accuracy**: 86.5%
+- **Validation Accuracy**: 87.3%
 
 This high training accuracy suggests that the model generalizes well to the training data, while the testing and validation results indicate that the model still performs well on unseen data.
 
