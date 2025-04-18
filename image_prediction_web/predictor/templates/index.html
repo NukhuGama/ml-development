@@ -1,122 +1,41 @@
+<!-- File: predictor/templates/index.html -->
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Image Prediction</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background: #f4f4f4;
-            padding: 40px;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            display: inline-block;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        img {
-            margin-top: 15px;
-            max-width: 300px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-        }
-        button {
-            margin-top: 10px;
-            margin-right: 5px;
-            padding: 10px 20px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .clear-btn {
-            background: #6c757d;
-        }
-        h2, h3, h4 {
-            margin: 10px 0;
-        }
-        #preview {
-            display: none;
-        }
-        #result-image {
-            display: block;
-        }
-        #prediction-results {
-            display: block;
-        }
-        .button-group {
-            margin-top: 10px;
-        }
-    </style>
+    <title>Image Prediction - Caltech101</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <div class="container">
-        <h2>Upload an Image for Prediction</h2>
-        <form id="prediction-form" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="file" id="image-input" name="image" accept="image/*" onchange="previewImage(event)" required>
-            <br>
-            <img id="preview" alt="Image Preview" />
-            <br>
-            <div class="button-group">
+        <h1>Welcome to Image Prediction</h1>
+        <p class="description">
+            Powered by a model trained on the <strong>Caltech101</strong> dataset. Upload any image and test how well the model can predict it. Give it a try with something from the web or your own collection!
+        </p>
+
+        <form method="post" enctype="multipart/form-data" id="prediction-form">
+            <div >
+                {% csrf_token %}
+                <input type="file" class="img-class" id="image-input" name="image" accept="image/*" onchange="previewImage(event)" required>
+                <br>
                 <button type="submit">Predict</button>
-                <button type="button" class="clear-btn" onclick="clearForm()">Clear</button>
+                <button type="button" class="clear-btn" id="clear-button">Clear</button>
+
             </div>
+            
         </form>
-        
+
+        <img id="preview"  class="preview-image" style="display: none;" alt="Image Preview" />
+
         {% if class_name %}
         <div id="prediction-results">
-            <h3 id="prediction-label">Prediction: {{ class_name }}</h3>
-            <h4 id="confidence-label">Confidence: {{ confidence }}%</h4>
-            <img id="result-image" src="{{ image_url }}" alt="Uploaded Image Result" />
+            <h3>Prediction: {{ class_name }}</h3>
+            <h4>Confidence: {{ confidence }}%</h4>
+            <img id="result-image" class="preview-image" src="{{ image_url }}" alt="Prediction Result">
         </div>
         {% endif %}
     </div>
     
-    <script>
-        function previewImage(event) {
-            const input = event.target;
-            const reader = new FileReader();
-            
-            // Reset the preview image each time a new image is selected
-            const preview = document.getElementById('preview');
-            preview.classList.remove('hidden');
-            preview.src = "";  // Clear any previous image preview
-            
-            // Hide the entire prediction results section if it exists
-            const predictionResults = document.getElementById('prediction-results');
-            if (predictionResults) {
-                predictionResults.style.display = 'none';
-            }
-            
-            reader.onload = function() {
-                preview.src = reader.result;  // Set new image as preview
-                preview.style.display = 'block';  // Show the image preview
-            };
-            
-            if (input.files && input.files[0]) {
-                reader.readAsDataURL(input.files[0]);  // Read new image
-            }
-        }
-        
-        function clearForm() {
-            // Reset the file input
-            document.getElementById('image-input').value = '';
-            
-            // Hide the preview image
-            const preview = document.getElementById('preview');
-            preview.style.display = 'none';
-            preview.src = '';
-            
-            // Hide prediction results if they exist
-            const predictionResults = document.getElementById('prediction-results');
-            if (predictionResults) {
-                predictionResults.style.display = 'none';
-            }
-        }
-    </script>
+    <script src="{% static 'js/scripts.js' %}"></script>
 </body>
 </html>
