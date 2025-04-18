@@ -3,3 +3,5 @@ tfjs_model/*
 saved_model/*
 h5_saved_model/*
 dataset/*
+image_prediction_web/ml_models/*
+image_prediction_web/media/*
