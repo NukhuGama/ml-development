@@ -7,31 +7,29 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to Image Prediction</h1>
-        <p class="description">
-            Powered by a model trained on the <strong>Caltech101</strong> dataset. Upload any image and test how well the model can predict it. Give it a try with something from the web or your own collection!
-        </p>
+    <div class="card">
+        <h1>N-Digital Caltech101 Classifier</h1>
+        <p class="description">Upload any image and get instant predictions from a model trained on the Caltech101 dataset.</p>
 
         <form method="post" enctype="multipart/form-data" id="prediction-form">
-            <div >
-                {% csrf_token %}
-                <input type="file" class="img-class" id="image-input" name="image" accept="image/*" onchange="previewImage(event)" required>
-                <br>
+            {% csrf_token %}
+            <input type="file" id="image-input" name="image" accept="image/*" onchange="previewImage(event)" required>
+            <div>
                 <button type="submit">Predict</button>
-                <button type="button" class="clear-btn" id="clear-button">Clear</button>
-
+                <button type="button" class="clear-btn" id="clear-button" onclick="clearForm()">Clear</button>
             </div>
-            
         </form>
 
-        <img id="preview"  class="preview-image" style="display: none;" alt="Image Preview" />
+        <div class="image-preview" id="preview-wrapper" style="text-align: center;">
+            <img id="preview" src="" alt="Preview Image" style="display: none; margin: 20px auto;">
+        </div>
+        
 
         {% if class_name %}
-        <div id="prediction-results">
+        <div class="result" id="prediction-results">
             <h3>Prediction: {{ class_name }}</h3>
             <h4>Confidence: {{ confidence }}%</h4>
-            <img id="result-image" class="preview-image" src="{{ image_url }}" alt="Prediction Result">
+            <img src="{{ image_url }}" alt="Predicted Image" class="image-preview">
         </div>
         {% endif %}
     </div>
